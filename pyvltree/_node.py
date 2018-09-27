@@ -20,7 +20,9 @@ class _Node:
     def insert(self, obj):
         """ """
 
-        if obj <= self.obj:
+        if obj == self.obj:
+            return
+        elif obj < self.obj:
             if self.left is None:
                 self.left = _Node(obj, self)
             else:

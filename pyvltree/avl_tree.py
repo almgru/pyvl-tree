@@ -17,7 +17,11 @@ class AVLTree:
             return node.obj if node is not None else None
 
     def insert(self, obj):
-        """ """
+        """ Insert an element into the tree.
+
+            If an element equal (by the obj's __eq__ method) to obj is
+            inserted, it will not be added.
+        """
 
         if self._root is None:
             self._root = _Node(obj)
