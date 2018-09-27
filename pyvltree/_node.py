@@ -21,7 +21,7 @@ class _Node:
         """ """
 
         if obj <= self.obj:
-          if self.left is None:
+            if self.left is None:
                 self.left = _Node(obj, self)
             else:
                 self.left.insert(obj)
@@ -30,12 +30,6 @@ class _Node:
                 self.right = _Node(obj, self)
             else:
                 self.right.insert(obj)
-
-    def delete(self):
-        if self.is_left_child():
-            self.parent.left = None
-        elif self.is_right_child():
-            self.parent.right = None
 
     def replace(self, other):
         other.obj = self.obj
@@ -64,6 +58,9 @@ class _Node:
         if self.has_right_child():
             self.right.print()
 
+    def is_root(self):
+        return self.parent is None
+
     def is_left_child(self):
         return (self.parent.left is self
                 if self.parent is not None
@@ -75,7 +72,7 @@ class _Node:
                 else False)
 
     def has_two_children(self):
-        return self.has_left_child() and self.has_right_child
+        return self.has_left_child() and self.has_right_child()
 
     def has_left_child(self):
         return self.left is not None
