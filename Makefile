@@ -1,12 +1,20 @@
 # Makefile
 
 SHELL := /usr/bin/env bash
+sources := $(wildcard pyvltree/*.py)
+version := $(shell grep --perl-regex --only-matching \
+			 "(?<=version=\')\d+\.\d+\.\d+(\-.+)?(?=\')" ./setup.py)
+target := dist/PYVLTree-$(version).tar.gz
 
 .PHONY: all
-all: debug
+all: $(target)
 
-.PHONY: debug
-debug: venv_dev
+.PHONY: test
+test: $(target)
+	source ./venv_dev/bin/activate;\
+	python -m unittest
+
+$(target): $(sources) venv_dev
 	source ./venv_dev/bin/activate;\
 	python setup.py sdist;\
 	pip install dist/PYVLTree-*.tar.gz

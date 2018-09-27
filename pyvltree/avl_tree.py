@@ -16,6 +16,9 @@ class AVLTree:
             node = self._root.find(obj)
             return node.obj if node is not None else None
 
+    def size(self):
+        return self._root.size() if self._root is not None else 0
+
     def insert(self, obj):
         """ Insert an element into the tree.
 

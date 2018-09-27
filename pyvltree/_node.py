@@ -17,6 +17,16 @@ class _Node:
         else:
             return self.right.find(obj) if self.right is not None else None
 
+    def size(self):
+        if self.has_two_children():
+            return self.left.size() + self.right.size()
+        elif self.has_left_child():
+            return self.left.size()
+        elif self.has_right_child():
+            return self.right.size()
+        else:
+            return 1
+
     def insert(self, obj):
         """ """
 

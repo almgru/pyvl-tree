@@ -21,3 +21,12 @@ class APITest(unittest.TestCase):
             self.tree.insert(element)
             foundElement = self.tree.find(element)
             self.assertEqual(element, foundElement)
+
+    def test_tree_shall_insert_only_one_of_multiple_equivalent_elements(self):
+        element = 1
+        eq_element = 1
+
+        self.tree.insert(element)
+        self.tree.insert(eq_element)
+
+        self.assertEqual(self.tree.size(), 1)
