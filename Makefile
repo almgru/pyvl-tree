@@ -9,6 +9,13 @@ target := dist/PYVLTree-$(version).tar.gz
 .PHONY: all
 all: $(target)
 
+.PHONY: clean
+clean:
+	rm -rf ./venv_dev/
+	rm -rf ./pyvltree/__pycache__/
+	rm -rf ./pyvltree/test/__pycache__/
+	rm -rf ./dist/
+
 .PHONY: test
 test: $(target)
 	source ./venv_dev/bin/activate;\
