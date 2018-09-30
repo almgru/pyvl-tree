@@ -1,8 +1,7 @@
 # Makefile
 
 SHELL := /usr/bin/env bash
-venv_dev := ./venv_dev/
-venv_prod := ./venv_prod/
+venv := ./venv
 dev_requirements := ./requirements/dev.txt
 sources := $(wildcard pyvltree/*.py)
 version := $(shell grep --perl-regex --only-matching \
@@ -14,24 +13,24 @@ all: $(target)
 
 .PHONY: clean
 clean:
-	rm -rf $(venv_dev) $(venv_prod)
+	rm -rf $(venv)
 	rm -rf ./pyvltree/__pycache__/
 	rm -rf ./pyvltree/test/__pycache__/
 	rm -rf ./dist/
 
 .PHONY: test
 test: $(target)
-	source ./venv_dev/bin/activate;\
+	source $(venv)/bin/activate;\
 	python -m unittest
 
-$(target): $(sources) $(venv_dev)
-	source ./venv_dev/bin/activate;\
+$(target): $(sources) $(venv)
+	source $(venv)/bin/activate;\
 	python setup.py sdist;\
-	pip install dist/PYVLTree-*.tar.gz
+	pip install $(target)
 
-$(venv_dev): $(dev_requirements)
-	rm -rf $(venv_dev)
-	test -d vevn_dev || python3 -m venv $(venv_dev)
-	source ./venv_dev/bin/activate;\
+$(venv): $(dev_requirements)
+	rm -rf $(venv)
+	python3 -m venv $(venv)
+	source $(venv)/bin/activate;\
 	pip install --upgrade pip setuptools;\
 	pip install --requirement $(dev_requirements)

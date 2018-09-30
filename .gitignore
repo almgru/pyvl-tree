@@ -1,5 +1,4 @@
-venv_dev/
-venv_prod/
+venv/
 MANIFEST
 .vscode/
 __pycache__/
