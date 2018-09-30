@@ -1,9 +1,8 @@
-class _Node:
+class _AVLNode:
     """ """
 
-    def __init__(self, obj, parent=None):
+    def __init__(self, obj):
         self.obj = obj
-        self.parent = parent
         self.left = None
         self.right = None
 
@@ -18,6 +17,8 @@ class _Node:
             return self.right.find(obj) if self.right is not None else None
 
     def size(self):
+        """ Time complexity: O(n) """
+
         if self.has_two_children():
             return self.left.size() + self.right.size()
         elif self.has_left_child():
@@ -34,54 +35,46 @@ class _Node:
             return
         elif obj < self.obj:
             if self.left is None:
-                self.left = _Node(obj, self)
+                self.left = _AVLNode(obj)
             else:
                 self.left.insert(obj)
         else:
             if self.right is None:
-                self.right = _Node(obj, self)
+                self.right = _AVLNode(obj)
             else:
                 self.right.insert(obj)
 
-    def replace(self, other):
-        other.obj = self.obj
+    def delete(self, obj):
+        """ """
+        new_sub_root = None
 
-        if self.has_right_child():
-            if self.is_left_child():
-                self.parent.left = self.right
-            elif self.is_right_child():
-                self.parent.right = self.right
+        if obj < self.obj:
+            self.left = (self.left.delete(obj) 
+                         if self.left is not None
+                         else None)
+            new_sub_root = self
+        elif obj > self.obj:
+            self.right = (self.right.delete(obj) 
+                          if self.right is not None
+                          else None)
+            new_sub_root = self
+        else:
+            if self.has_two_children():
+                self.obj = self.right.min().obj
+                self.right.delete(self.obj)
+                new_sub_root = self
+            else:
+                new_sub_root = (self.left 
+                                if self.left is not None 
+                                else self.right)
 
-        self.delete()
+        return new_sub_root
 
     def min(self):
         if self.has_left_child():
             return self.left.min()
         else:
             return self
-
-    def print(self):
-        print((f'obj = {self.obj}, left = {self.left}, right = '
-               f'{self.right}, parent = {self.parent}\n'))
-
-        if self.has_left_child():
-            self.left.print()
-
-        if self.has_right_child():
-            self.right.print()
-
-    def is_root(self):
-        return self.parent is None
-
-    def is_left_child(self):
-        return (self.parent.left is self
-                if self.parent is not None
-                else False)
-
-    def is_right_child(self):
-        return (self.parent.right is self
-                if self.parent is not None
-                else False)
 
     def has_two_children(self):
         return self.has_left_child() and self.has_right_child()
@@ -91,3 +84,6 @@ class _Node:
 
     def has_right_child(self):
         return self.right is not None
+
+    def is_leaf(self):
+        return not self.has_left_child() and not self.has_right_child()

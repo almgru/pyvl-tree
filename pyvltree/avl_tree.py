@@ -1,4 +1,4 @@
-from ._node import _Node
+from ._avl_node import _AVLNode
 
 
 class AVLTree:
@@ -27,49 +27,16 @@ class AVLTree:
         """
 
         if self._root is None:
-            self._root = _Node(obj)
+            self._root = _AVLNode(obj)
         else:
             self._root.insert(obj)
 
     def delete(self, obj):
         """ """
 
-        if self._root is None:
-            return
-
-        to_delete = self._root.find(obj)
-
-        if to_delete is None:
-            return
-
-        if to_delete.has_two_children():
-            pass
-        elif to_delete.has_left_child():
-            if to_delete.is_root():
-                self._root = to_delete.left
-            elif to_delete.is_left_child():
-                to_delete.parent.left = to_delete.left
-            elif to_delete.is_right_child():
-                to_delete.parent.right = to_delete.left
-
-            to_delete.left.parent = to_delete.parent
-
-        elif to_delete.has_right_child():
-            if to_delete.is_root():
-                self._root = to_delete.right
-            elif to_delete.is_left_child():
-                to_delete.parent.left = to_delete.right
-            elif to_delete.is_right_child():
-                to_delete.parent.right = to_delete.right
-
-            to_delete.right.parent = to_delete.parent
-        else:
-            if to_delete.is_root():
-                self._root = None
-            elif to_delete.is_left_child():
-                to_delete.parent.left = None
-            elif to_delete.is_right_child():
-                to_delete.parent.right = None
+        self._root = (self._root.delete(obj)
+                      if self._root is not None
+                      else none)
 
     def print(self):
         self._root.print() if self._root is not None else print(self._root)
