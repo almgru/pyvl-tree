@@ -20,11 +20,11 @@ class _AVLNode():
         """ Time complexity: O(n) """
 
         if self._has_two_children():
-            return self.left.size() + self.right.size()
+            return 1 + self.left.size() + self.right.size()
         elif self._has_left_child():
-            return self.left.size()
+            return 1 + self.left.size()
         elif self._has_right_child():
-            return self.right.size()
+            return 1 + self.right.size()
         else:
             return 1
 

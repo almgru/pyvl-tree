@@ -27,6 +27,14 @@ class TestAVLTree(unittest.TestCase):
 
         self.assertEqual(actual, expected)
 
+    def test_insert__not_insert_element__tree_has_equivalent_element(self):
+        self.tree._root = Helper.create_node(10)
+        
+        self.tree.insert(10)
+
+        self.assertTrue(self.tree._root.left is None)
+        self.assertTrue(self.tree._root.right is None)
+
     def test_delete__set_root_to_none__deleting_leaf_root(self):
         self.tree._root = Helper.create_node(1)
         self.tree.delete(1)
@@ -103,3 +111,37 @@ class TestAVLTree(unittest.TestCase):
         actual = self.tree.find(5)
 
         self.assertTrue(actual is None)
+
+    def test_size__return_zero__tree_is_empty(self):
+        expected = 0
+
+        actual = self.tree.size()
+
+        self.assertEqual(actual, expected)
+
+    def test_size__return_one__tree_has_one_element(self):
+        expected = 1
+        self.tree._root = Helper.create_node(10)
+
+        actual = self.tree.size()
+
+        self.assertEqual(actual, expected)
+
+    def test_size__expected__tree_has_node_with_two_children(self):
+        expected = 3
+        self.tree._root = Helper.create_node(4)
+        self.tree._root.left = Helper.create_node(2)
+        self.tree._root.right = Helper.create_node(6)
+
+        actual = self.tree.size()
+
+        self.assertEqual(actual, expected)
+
+    def test_size__expected__tree_has_node_with_one_child(self):
+        expected = 2
+        self.tree._root = Helper.create_node(10)
+        self.tree._root.left = Helper.create_node(5)
+
+        actual = self.tree.size()
+
+        self.assertEqual(actual, expected)
