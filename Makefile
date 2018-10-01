@@ -21,7 +21,8 @@ clean:
 .PHONY: test
 test: $(target)
 	source $(venv)/bin/activate;\
-	python -m unittest
+	coverage run -m unittest;\
+	coverage report -m
 
 $(target): $(sources) $(venv)
 	source $(venv)/bin/activate;\

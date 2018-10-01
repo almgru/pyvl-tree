@@ -3,3 +3,4 @@ MANIFEST
 .vscode/
 __pycache__/
 dist/
+.coverage
