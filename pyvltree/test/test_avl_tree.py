@@ -73,3 +73,33 @@ class TestAVLTree(unittest.TestCase):
         self.assertEqual(self.tree._root.value, 100)
         self.assertEqual(self.tree._root.left.value, 75)
         self.assertEqual(self.tree._root.left.left.value, 25)
+
+    def test_find__find_element__element_is_at_root(self):
+        expected = 1
+        self.tree._root = Helper.create_node(expected)
+
+        actual = self.tree.find(expected)
+
+        self.assertEqual(actual, expected)
+
+    def test_find__find_element__element_is_not_at_root(self):
+        expected = 4
+        self.tree._root = Helper.create_node(3)
+        self.tree._root.right = Helper.create_node(expected)
+
+        actual = self.tree.find(expected)
+
+        self.assertEqual(actual, expected)
+
+    def test_find__return_None__tree_is_empty(self):
+        actual = self.tree.find(3)
+
+        self.assertTrue(actual is None)
+
+    def test_find__return_None__element_not_in_tree(self):
+        self.tree._root = Helper.create_node(10)
+        self.tree._root.right = Helper.create_node(15)
+
+        actual = self.tree.find(5)
+
+        self.assertTrue(actual is None)
