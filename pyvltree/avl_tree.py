@@ -1,25 +1,23 @@
 from ._avl_node import _AVLNode
 
 
-class AVLTree:
+class AVLTree():
     """ """
 
     def __init__(self):
         self._root = None
 
-    def find(self, obj):
+    def find(self, value):
         """ """
 
-        if self._root is None:
-            return None
-        else:
-            node = self._root.find(obj)
-            return node.obj if node is not None else None
+        node = self._root.find(value) if self._root is not None else None
+
+        return node.value if node is not None else None
 
     def size(self):
         return self._root.size() if self._root is not None else 0
 
-    def insert(self, obj):
+    def insert(self, value):
         """ Insert an element into the tree.
 
             If an element equal (by the obj's __eq__ method) to obj is
@@ -27,16 +25,13 @@ class AVLTree:
         """
 
         if self._root is None:
-            self._root = _AVLNode(obj)
+            self._root = _AVLNode(value)
         else:
-            self._root.insert(obj)
+            self._root.insert(value)
 
-    def delete(self, obj):
+    def delete(self, value):
         """ """
 
-        self._root = (self._root.delete(obj)
+        self._root = (self._root.delete(value)
                       if self._root is not None
                       else none)
-
-    def print(self):
-        self._root.print() if self._root is not None else print(self._root)

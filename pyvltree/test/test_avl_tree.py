@@ -12,18 +12,18 @@ class TestAVLTree(unittest.TestCase):
         expected = 1
 
         self.tree.insert(expected)
-        actual = self.tree.find(expected)
+        actual = self.tree._root.value
 
         self.assertEqual(actual, expected)
 
     def test_insert__insert_element__tree_not_empty(self):
-        first_element = "Abc"
-        expected = "Def"
+        first_element = 5
+        expected = 3
 
         self.tree.insert(first_element)
         self.tree.insert(expected)
 
-        actual = self.tree.find(expected)
+        actual = self.tree._root.left.value
 
         self.assertEqual(actual, expected)
 
@@ -40,7 +40,7 @@ class TestAVLTree(unittest.TestCase):
 
         self.tree.delete(5)
 
-        self.assertEqual(self.tree._root.obj, 7)
+        self.assertEqual(self.tree._root.value, 7)
 
     def test_delete__correct_state__deleting_leaf_node(self):
         self.tree._root = _AVLNode(10)
@@ -48,7 +48,7 @@ class TestAVLTree(unittest.TestCase):
 
         self.tree.delete(5)
 
-        self.assertEqual(self.tree._root.obj, 10)
+        self.assertEqual(self.tree._root.value, 10)
         self.assertTrue(self.tree._root.right is None)
 
     def test_delete__correct_state__deleting_node_with_one_child(self):
@@ -58,8 +58,8 @@ class TestAVLTree(unittest.TestCase):
 
         self.tree.delete(50)
 
-        self.assertEqual(self.tree._root.obj, 20)
-        self.assertEqual(self.tree._root.right.obj, 30)
+        self.assertEqual(self.tree._root.value, 20)
+        self.assertEqual(self.tree._root.right.value, 30)
         self.assertTrue(self.tree._root.right.left is None)
 
     def test_delete__correct_state__deleting_node_with_two_children(self):
@@ -69,7 +69,7 @@ class TestAVLTree(unittest.TestCase):
         self.tree._root.left.right = _AVLNode(75)
 
         self.tree.delete(50)
-        
-        self.assertEqual(self.tree._root.obj, 100)
-        self.assertEqual(self.tree._root.left.obj, 75)
-        self.assertEqual(self.tree._root.left.left.obj, 25)
+
+        self.assertEqual(self.tree._root.value, 100)
+        self.assertEqual(self.tree._root.left.value, 75)
+        self.assertEqual(self.tree._root.left.left.value, 25)

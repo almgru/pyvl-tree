@@ -1,89 +1,84 @@
-class _AVLNode:
+class _AVLNode():
     """ """
 
-    def __init__(self, obj):
-        self.obj = obj
+    def __init__(self, value):
+        self.value = value
         self.left = None
         self.right = None
 
-    def find(self, obj):
+    def find(self, value):
         """ """
 
-        if obj == self.obj:
+        if value == self.value:
             return self
-        elif obj < self.obj:
-            return self.left.find(obj) if self.left is not None else None
+        elif value < self.value:
+            return self.left.find(value) if self.left is not None else None
         else:
-            return self.right.find(obj) if self.right is not None else None
+            return self.right.find(value) if self.right is not None else None
 
     def size(self):
         """ Time complexity: O(n) """
 
-        if self.has_two_children():
+        if self._has_two_children():
             return self.left.size() + self.right.size()
-        elif self.has_left_child():
+        elif self._has_left_child():
             return self.left.size()
-        elif self.has_right_child():
+        elif self._has_right_child():
             return self.right.size()
         else:
             return 1
 
-    def insert(self, obj):
+    def insert(self, value):
         """ """
 
-        if obj == self.obj:
+        if value == self.value:
             return
-        elif obj < self.obj:
+        elif value < self.value:
             if self.left is None:
-                self.left = _AVLNode(obj)
+                self.left = _AVLNode(value)
             else:
-                self.left.insert(obj)
+                self.left.insert(value)
         else:
             if self.right is None:
-                self.right = _AVLNode(obj)
+                self.right = _AVLNode(value)
             else:
-                self.right.insert(obj)
+                self.right.insert(value)
 
-    def delete(self, obj):
+    def delete(self, value):
         """ """
-        new_sub_root = None
 
-        if obj < self.obj:
-            self.left = (self.left.delete(obj) 
+        if value < self.value:
+            self.left = (self.left.delete(value)
                          if self.left is not None
                          else None)
-            new_sub_root = self
-        elif obj > self.obj:
-            self.right = (self.right.delete(obj) 
+
+            return self
+        elif value > self.value:
+            self.right = (self.right.delete(value)
                           if self.right is not None
                           else None)
-            new_sub_root = self
+
+            return self
         else:
-            if self.has_two_children():
-                self.obj = self.right.min().obj
-                self.right.delete(self.obj)
-                new_sub_root = self
+            if self._has_two_children():
+                self.value = self.right._min().value
+                self.right.delete(self.value)
+
+                return self
             else:
-                new_sub_root = (self.left 
-                                if self.left is not None 
-                                else self.right)
+                return self.left if self.left is not None else self.right
 
-        return new_sub_root
-
-    def min(self):
-        if self.has_left_child():
-            return self.left.min()
+    def _min(self):
+        if self._has_left_child():
+            return self.left._min()
         else:
             return self
 
-    def has_two_children(self):
-        return self.has_left_child() and self.has_right_child()
+    def _has_two_children(self):
+        return self._has_left_child() and self._has_right_child()
 
-    def has_left_child(self):
+    def _has_left_child(self):
         return self.left is not None
 
-    def has_right_child(self):
+    def _has_right_child(self):
         return self.right is not None
-
-    def is_leaf(self):
-        return not self.has_left_child() and not self.has_right_child()
