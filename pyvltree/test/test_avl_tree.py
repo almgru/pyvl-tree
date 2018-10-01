@@ -17,19 +17,44 @@ class TestAVLTree(unittest.TestCase):
         self.assertEqual(actual, expected)
 
     def test_insert__insert_element__tree_not_empty(self):
-        first_element = 5
         expected = 3
 
-        self.tree.insert(first_element)
+        self.tree.insert(5)
         self.tree.insert(expected)
 
         actual = self.tree._root.left.value
 
         self.assertEqual(actual, expected)
 
+    def test_insert__correct_position__inserted_less_than_root(self):
+        expected = 1
+
+        self.tree.insert(3)
+        self.tree.insert(2)
+        self.tree.insert(expected)
+
+        actual = (self.tree._root.left.left.value
+                  if self.tree._root.left.left is not None
+                  else None)
+
+        self.assertEqual(actual, expected)
+
+    def test_insert__correct_position__inserted_greater_than_root(self):
+        expected = 3
+
+        self.tree.insert(1)
+        self.tree.insert(2)
+        self.tree.insert(3)
+
+        actual = (self.tree._root.right.right.value
+                  if self.tree._root.right.right is not None
+                  else None)
+
+        self.assertEqual(actual, expected)
+
     def test_insert__not_insert_element__tree_has_equivalent_element(self):
         self.tree._root = Helper.create_node(10)
-        
+
         self.tree.insert(10)
 
         self.assertTrue(self.tree._root.left is None)
@@ -75,12 +100,14 @@ class TestAVLTree(unittest.TestCase):
         self.tree._root.left = Helper.create_node(50)
         self.tree._root.left.left = Helper.create_node(25)
         self.tree._root.left.right = Helper.create_node(75)
+        self.tree._root.left.right.left = Helper.create_node(70)
 
         self.tree.delete(50)
 
         self.assertEqual(self.tree._root.value, 100)
-        self.assertEqual(self.tree._root.left.value, 75)
+        self.assertEqual(self.tree._root.left.value, 70)
         self.assertEqual(self.tree._root.left.left.value, 25)
+        self.assertEqual(self.tree._root.left.right.value, 75)
 
     def test_find__find_element__element_is_at_root(self):
         expected = 1
@@ -137,10 +164,11 @@ class TestAVLTree(unittest.TestCase):
 
         self.assertEqual(actual, expected)
 
-    def test_size__expected__tree_has_node_with_one_child(self):
-        expected = 2
+    def test_size__expected__tree_has_nodes_with_one_child(self):
+        expected = 3
         self.tree._root = Helper.create_node(10)
         self.tree._root.left = Helper.create_node(5)
+        self.tree._root.left.right = Helper.create_node(7)
 
         actual = self.tree.size()
 
