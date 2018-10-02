@@ -53,12 +53,52 @@ class TestAVLTree(unittest.TestCase):
         self.assertEqual(actual, expected)
 
     def test_insert__not_insert_element__tree_has_equivalent_element(self):
-        self.tree._root = Helper.create_node(10)
+        self.tree.insert(10)
 
         self.tree.insert(10)
 
         self.assertTrue(self.tree._root.left is None)
         self.assertTrue(self.tree._root.right is None)
+
+    def test_insert__balance_tree__right_child_and_not_left_heavy(self):
+        self.tree.insert(1)
+        self.tree.insert(2)
+
+        self.tree.insert(3)
+
+        self.assertEqual(self.tree._root.value, 2)
+        self.assertEqual(self.tree._root.left, 1)
+        self.assertEqual(self.tree._root.right, 3)
+
+    def test_insert__balance_tree__left_child_and_not_right_heavy(self):
+        self.tree.insert(3)
+        self.tree.insert(2)
+
+        self.tree.insert(1)
+
+        self.assertEqual(self.tree._root.value, 2)
+        self.assertEqual(self.tree._root.left, 1)
+        self.assertEqual(self.tree._root.right, 3)
+
+    def test_insert__balance_tree__left_child_and_right_heavy(self):
+        self.tree.insert(3)
+        self.tree.insert(1)
+
+        self.tree.insert(2)
+
+        self.assertEqual(self.tree._root.value, 2)
+        self.assertEqual(self.tree._root.left.value, 1)
+        self.assertEqual(self.tree._root.right.value, 3)
+
+    def test_insert__balance_tree__right_child_and_left_heavy(self):
+        self.tree.insert(1)
+        self.tree.insert(3)
+
+        self.tree.insert(2)
+
+        self.assertEqual(self.tree._root.value, 2)
+        self.assertEqual(self.tree._root.left.value, 1)
+        self.assertEqual(self.tree._root.right.value, 3)
 
     def test_delete__set_root_to_none__deleting_leaf_root(self):
         self.tree._root = Helper.create_node(1)
