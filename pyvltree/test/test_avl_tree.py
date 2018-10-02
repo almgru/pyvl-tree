@@ -29,8 +29,10 @@ class TestAVLTree(unittest.TestCase):
     def test_insert__correct_position__inserted_less_than_root(self):
         expected = 1
 
+        self.tree.insert(4)
+        self.tree.insert(6)
         self.tree.insert(3)
-        self.tree.insert(2)
+
         self.tree.insert(expected)
 
         actual = (self.tree._root.left.left.value
@@ -40,11 +42,13 @@ class TestAVLTree(unittest.TestCase):
         self.assertEqual(actual, expected)
 
     def test_insert__correct_position__inserted_greater_than_root(self):
-        expected = 3
+        expected = 4
 
-        self.tree.insert(1)
         self.tree.insert(2)
+        self.tree.insert(1)
         self.tree.insert(3)
+
+        self.tree.insert(expected)
 
         actual = (self.tree._root.right.right.value
                   if self.tree._root.right.right is not None
@@ -67,8 +71,8 @@ class TestAVLTree(unittest.TestCase):
         self.tree.insert(3)
 
         self.assertEqual(self.tree._root.value, 2)
-        self.assertEqual(self.tree._root.left, 1)
-        self.assertEqual(self.tree._root.right, 3)
+        self.assertEqual(self.tree._root.left.value, 1)
+        self.assertEqual(self.tree._root.right.value, 3)
 
     def test_insert__balance_tree__left_child_and_not_right_heavy(self):
         self.tree.insert(3)
@@ -77,8 +81,8 @@ class TestAVLTree(unittest.TestCase):
         self.tree.insert(1)
 
         self.assertEqual(self.tree._root.value, 2)
-        self.assertEqual(self.tree._root.left, 1)
-        self.assertEqual(self.tree._root.right, 3)
+        self.assertEqual(self.tree._root.left.value, 1)
+        self.assertEqual(self.tree._root.right.value, 3)
 
     def test_insert__balance_tree__left_child_and_right_heavy(self):
         self.tree.insert(3)
