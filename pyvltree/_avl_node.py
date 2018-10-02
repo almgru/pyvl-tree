@@ -1,23 +1,20 @@
 class _AVLNode():
-    """ """
 
     def __init__(self, value):
         self.value = value
         self.left = None
         self.right = None
 
-    def find(self, value):
-        """ """
+    def search(self, key):
 
-        if value == self.value:
+        if key == self.value:
             return self
-        elif value < self.value:
-            return self.left.find(value) if self.left is not None else None
+        elif key < self.value:
+            return self.left.search(key) if self._has_left_child() else None
         else:
-            return self.right.find(value) if self.right is not None else None
+            return self.right.search(key) if self._has_right_child() else None
 
     def size(self):
-        """ Time complexity: O(n) """
 
         if self._has_two_children():
             return 1 + self.left.size() + self.right.size()
@@ -29,7 +26,6 @@ class _AVLNode():
             return 1
 
     def insert(self, value):
-        """ """
 
         if value == self.value:
             return
@@ -45,7 +41,6 @@ class _AVLNode():
                 self.right.insert(value)
 
     def delete(self, value):
-        """ """
 
         if value < self.value:
             self.left = (self.left.delete(value)
