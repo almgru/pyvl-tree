@@ -29,6 +29,12 @@ $(target): $(sources) $(venv)
 	python setup.py sdist;\
 	pip install $(target)
 
+	if [[ -f ./.build_nr ]]; then \
+		awk -F',' '{printf("%d",$$1+1)}' ./.build_nr > ./.build_nr.tmp && mv ./.build_nr.tmp ./.build_nr ;\
+	else \
+		echo 1 > ./.build_nr ;\
+	fi
+
 $(venv): $(dev_requirements)
 	rm -rf $(venv)
 	python3 -m venv $(venv)
