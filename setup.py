@@ -1,4 +1,4 @@
-from distutils.core import setup
+from setuptools import setup
 
 
 setup(
@@ -7,9 +7,9 @@ setup(
     author='Daniel Alm Grundström',
     author_email='daniel.alm.grundstrom@protonmail.com',
     packages=[
-        'pyvltree',
-        'pyvltree.test'
+        'pyvltree'
     ],
+    test_suite='pyvltree.test',
     scripts=[],
     url='https://github.com/almgru/Algorithms',
     license='LICENSE.txt',
