@@ -3,7 +3,7 @@ from distutils.core import setup
 
 setup(
     name='PYVLTree',
-    version='0.1.0-1',
+    version='0.2.0',
     author='Daniel Alm Grundström',
     author_email='daniel.alm.grundstrom@protonmail.com',
     packages=[
