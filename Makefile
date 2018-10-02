@@ -29,7 +29,7 @@ $(target): $(sources) $(venv)
 	python setup.py sdist;\
 	pip install $(target)
 
-$(venv): $(dev_requirements)
+$(venv): $(dev_requirements) setup.py
 	rm -rf $(venv)
 	python3 -m venv $(venv)
 	source $(venv)/bin/activate;\
