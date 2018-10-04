@@ -45,7 +45,6 @@ class _AVLNode():
                 new_height = max(self._height, self.right._height + 1)
 
         self._height = new_height
-
         self._balance_factor = self._calculate_balance_factor()
 
         if self._needs_rebalancing():
@@ -56,6 +55,8 @@ class _AVLNode():
         return new_subtree_root
 
     def delete(self, value):
+        new_subtree_root = self
+
         if value < self.value:
             self.left = (self.left.delete(value)
                          if self.left is not None
@@ -68,9 +69,17 @@ class _AVLNode():
             self.value = self.right._min().value
             self.right.delete(self.value)
         else:
-            return self.left if self.left is not None else self.right
+            new_subtree_root = (self.left
+                                if self.left is not None
+                                else self.right)
 
-        return self
+        self._height = self._recalculate_height()
+        self._balance_factor = self._calculate_balance_factor()
+
+        if self._needs_rebalancing():
+            new_subtree_root = self._rebalance()
+
+        return new_subtree_root
 
     def _min(self):
         return self.left._min() if self._has_left_child() else self

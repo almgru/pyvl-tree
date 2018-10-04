@@ -156,18 +156,18 @@ class TestAVLTree(unittest.TestCase):
         self.assertTrue(self.tree._root.right.left is None)
 
     def test_delete__correct_state__deleting_node_with_two_children(self):
-        self.tree._root = Helper.create_node(100)
-        self.tree._root.left = Helper.create_node(50)
-        self.tree._root.left.left = Helper.create_node(25)
-        self.tree._root.left.right = Helper.create_node(75)
-        self.tree._root.left.right.left = Helper.create_node(70)
+        self.tree.insert(100)
+        self.tree.insert(125)
+        self.tree.insert(50)
+        self.tree.insert(25)
+        self.tree.insert(75)
 
         self.tree.delete(50)
 
         self.assertEqual(self.tree._root.value, 100)
-        self.assertEqual(self.tree._root.left.value, 70)
+        self.assertEqual(self.tree._root.left.value, 75)
+        self.assertEqual(self.tree._root.right.value, 125)
         self.assertEqual(self.tree._root.left.left.value, 25)
-        self.assertEqual(self.tree._root.left.right.value, 75)
 
     def test_delete__rebalance__pivot_right_child_and_right_heavy(self):
         self.tree.insert(2)
@@ -178,8 +178,8 @@ class TestAVLTree(unittest.TestCase):
         self.tree.delete(1)
 
         self.assertEqual(self.tree._root.value, 3)
-        self.assertEqual(self.tree._root.left, 2)
-        self.assertEqual(self.tree._root.right, 4)
+        self.assertEqual(self.tree._root.left.value, 2)
+        self.assertEqual(self.tree._root.right.value, 4)
 
     def test_delete__rebalance__pivot_left_child_and_left_heavy(self):
         self.tree.insert(3)
