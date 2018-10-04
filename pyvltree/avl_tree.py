@@ -43,8 +43,8 @@ class AVLTree():
             Worst-case time complexity: O(n)
         """
 
-        self._root = (_AVLNode(value) 
-                      if self._root is None 
+        self._root = (_AVLNode(value)
+                      if self._root is None
                       else self._root.insert(value))
 
     def delete(self, value):

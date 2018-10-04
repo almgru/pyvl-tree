@@ -64,7 +64,7 @@ class TestAVLTree(unittest.TestCase):
         self.assertTrue(self.tree._root.left is None)
         self.assertTrue(self.tree._root.right is None)
 
-    def test_insert__balance_tree__right_child_and_not_left_heavy(self):
+    def test_insert__rebalance__right_child_and_right_heavy(self):
         self.tree.insert(1)
         self.tree.insert(2)
 
@@ -74,7 +74,7 @@ class TestAVLTree(unittest.TestCase):
         self.assertEqual(self.tree._root.left.value, 1)
         self.assertEqual(self.tree._root.right.value, 3)
 
-    def test_insert__balance_tree__left_child_and_not_right_heavy(self):
+    def test_insert__rebalance__pivot_left_child_and_left_heavy(self):
         self.tree.insert(3)
         self.tree.insert(2)
 
@@ -84,7 +84,7 @@ class TestAVLTree(unittest.TestCase):
         self.assertEqual(self.tree._root.left.value, 1)
         self.assertEqual(self.tree._root.right.value, 3)
 
-    def test_insert__balance_tree__left_child_and_right_heavy(self):
+    def test_insert__rebalance__left_child_and_right_heavy(self):
         self.tree.insert(3)
         self.tree.insert(1)
 
@@ -94,7 +94,7 @@ class TestAVLTree(unittest.TestCase):
         self.assertEqual(self.tree._root.left.value, 1)
         self.assertEqual(self.tree._root.right.value, 3)
 
-    def test_insert__balance_tree__right_child_and_left_heavy(self):
+    def test_insert__rebalance__right_child_and_left_heavy(self):
         self.tree.insert(1)
         self.tree.insert(3)
 
@@ -104,7 +104,7 @@ class TestAVLTree(unittest.TestCase):
         self.assertEqual(self.tree._root.left.value, 1)
         self.assertEqual(self.tree._root.right.value, 3)
 
-    def test_insert__balance_tree__balance_pivot_has_two_children(self):
+    def test_insert__rebalance__pivot_has_two_children(self):
         self.tree.insert(5)
         self.tree.insert(4)
         self.tree.insert(7)
@@ -168,6 +168,72 @@ class TestAVLTree(unittest.TestCase):
         self.assertEqual(self.tree._root.left.value, 70)
         self.assertEqual(self.tree._root.left.left.value, 25)
         self.assertEqual(self.tree._root.left.right.value, 75)
+
+    def test_delete__rebalance__pivot_right_child_and_right_heavy(self):
+        self.tree.insert(2)
+        self.tree.insert(1)
+        self.tree.insert(3)
+        self.tree.insert(4)
+
+        self.tree.delete(1)
+
+        self.assertEqual(self.tree._root.value, 3)
+        self.assertEqual(self.tree._root.left, 2)
+        self.assertEqual(self.tree._root.right, 4)
+
+    def test_delete__rebalance__pivot_left_child_and_left_heavy(self):
+        self.tree.insert(3)
+        self.tree.insert(2)
+        self.tree.insert(4)
+        self.tree.insert(1)
+
+        self.tree.delete(4)
+
+        self.assertEqual(self.tree._root.value, 2)
+        self.assertEqual(self.tree._root.left.value, 1)
+        self.assertEqual(self.tree._root.right.value, 3)
+
+    def test_delete__rebalance__pivot_right_child_and_left_heavy(self):
+        self.tree.insert(2)
+        self.tree.insert(1)
+        self.tree.insert(4)
+        self.tree.insert(3)
+
+        self.tree.delete(1)
+
+        self.assertEqual(self.tree._root.value, 3)
+        self.assertEqual(self.tree._root.left.value, 2)
+        self.assertEqual(self.tree._root.right.value, 4)
+
+    def test_delete__rebalance__pivot_left_child_and_right_heavy(self):
+        self.tree.insert(3)
+        self.tree.insert(1)
+        self.tree.insert(4)
+        self.tree.insert(2)
+
+        self.tree.delete(4)
+
+        self.assertEqual(self.tree._root.value, 2)
+        self.assertEqual(self.tree._root.left.value, 1)
+        self.assertEqual(self.tree._root.right.value, 3)
+
+    def test_delete__rebalance__pivot_has_two_children(self):
+        self.tree.insert(3)
+        self.tree.insert(2)
+        self.tree.insert(5)
+        self.tree.insert(1)
+        self.tree.insert(4)
+        self.tree.insert(6)
+        self.tree.insert(7)
+
+        self.tree.delete(1)
+
+        self.assertEqual(self.tree._root.value, 5)
+        self.assertEqual(self.tree._root.left.value, 3)
+        self.assertEqual(self.tree._root.left.left.value, 2)
+        self.assertEqual(self.tree._root.left.right.value, 4)
+        self.assertEqual(self.tree._root.right.value, 6)
+        self.assertEqual(self.tree._root.right.right.value, 7)
 
     def test_search__find_element__element_is_at_root(self):
         expected = 1
