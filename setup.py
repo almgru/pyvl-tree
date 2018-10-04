@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name='PYVLTree',
-    version='0.3.0',
+    version='0.3.1',
     author='Daniel Alm Grundström',
     author_email='daniel.alm.grundstrom@protonmail.com',
     packages=[
