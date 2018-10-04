@@ -12,16 +12,16 @@ class TestRandom(unittest.TestCase):
         self.tree = AVLTree()
         random.seed(datetime.now())
 
-    def test_height__should_be_log1024__inserting_1024_elements(self):
-        expected_min = 9
-        expected_max = 11
+    def test_height__be_less_than_max_height__inserting_n_elements(self):
+        n = 16384
+        expected_max_height = Helper.get_expected_max_height(n)
 
-        for val in random.sample(range(-100_000, 100_000), 1024):
+        for val in random.sample(range(-n * 2, n * 2), n):
             self.tree.insert(val)
 
         actual = Helper.find_tree_height(self.tree._root)
 
-        self.assertTrue(expected_min <= actual <= expected_max)
+        self.assertTrue(actual <= expected_max_height)
 
     def test_search__find_all_elements__random_insertions_and_deletions(self):
         to_insert = set(random.sample(range(-10_000, 10_000), 1024))
