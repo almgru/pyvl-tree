@@ -17,6 +17,7 @@ clean:
 	rm -rf ./pyvltree/__pycache__/
 	rm -rf ./pyvltree/test/__pycache__/
 	rm -rf ./dist/
+	rm -rf ./PYVLTree.egg-info/
 
 .PHONY: test
 test: $(target)
