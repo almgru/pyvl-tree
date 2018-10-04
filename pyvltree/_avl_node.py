@@ -60,28 +60,20 @@ class _AVLNode():
             self.left = (self.left.delete(value)
                          if self.left is not None
                          else None)
-            new_subtree_root = self
         elif value > self.value:
             self.right = (self.right.delete(value)
                           if self.right is not None
                           else None)
-            new_subtree_root = self
         elif self._has_two_children():
             self.value = self.right._min().value
             self.right.delete(self.value)
-            new_subtree_root = self
         else:
-            new_subtree_root = (self.left
-                                if self.left is not None
-                                else self.right)
+            return self.left if self.left is not None else self.right
 
-        return new_subtree_root
+        return self
 
     def _min(self):
-        if self._has_left_child():
-            return self.left._min()
-        else:
-            return self
+        return self.left._min() if self._has_left_child() else self
 
     def _needs_rebalancing(self):
         return abs(self.balance_factor) > self._BALANCE_THRESHOLD

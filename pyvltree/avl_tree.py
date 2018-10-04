@@ -43,10 +43,9 @@ class AVLTree():
             Worst-case time complexity: O(n)
         """
 
-        if self._root is None:
-            self._root = _AVLNode(value)
-        else:
-            self._root = self._root.insert(value)
+        self._root = (_AVLNode(value) 
+                      if self._root is None 
+                      else self._root.insert(value))
 
     def delete(self, value):
         """ Deletes an element from the tree.
