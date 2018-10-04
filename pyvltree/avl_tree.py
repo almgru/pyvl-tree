@@ -60,4 +60,4 @@ class AVLTree():
 
         self._root = (self._root.delete(value)
                       if self._root is not None
-                      else none)
+                      else None)
