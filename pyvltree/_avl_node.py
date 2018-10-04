@@ -4,8 +4,8 @@ class _AVLNode():
         self.value = value
         self.left = None
         self.right = None
-        self.height = 0
-        self.balance_factor = 0
+        self._height = 0
+        self._balance_factor = 0
         self._BALANCE_THRESHOLD = 1
 
     def search(self, key):
@@ -28,25 +28,25 @@ class _AVLNode():
 
     def insert(self, value):
         if value == self.value:
-            new_height = self.height
+            new_height = self._height
         elif value < self.value:
             if self.left is None:
                 self.left = _AVLNode(value)
-                new_height = max(self.height, 1)
+                new_height = max(self._height, 1)
             else:
                 self.left = self.left.insert(value)
-                new_height = max(self.height, self.left.height + 1)
+                new_height = max(self._height, self.left._height + 1)
         else:
             if self.right is None:
                 self.right = _AVLNode(value)
-                new_height = max(self.height, 1)
+                new_height = max(self._height, 1)
             else:
                 self.right = self.right.insert(value)
-                new_height = max(self.height, self.right.height + 1)
+                new_height = max(self._height, self.right._height + 1)
 
-        self.height = new_height
+        self._height = new_height
 
-        self.balance_factor = self._calculate_balance_factor()
+        self._balance_factor = self._calculate_balance_factor()
 
         if self._needs_rebalancing():
             new_subtree_root = self._rebalance()
@@ -76,13 +76,13 @@ class _AVLNode():
         return self.left._min() if self._has_left_child() else self
 
     def _needs_rebalancing(self):
-        return abs(self.balance_factor) > self._BALANCE_THRESHOLD
+        return abs(self._balance_factor) > self._BALANCE_THRESHOLD
 
     def _calculate_balance_factor(self):
-        right_subtree_height = (self.right.height
+        right_subtree_height = (self.right._height
                                 if self._has_right_child()
                                 else -1)
-        left_subtree_height = (self.left.height
+        left_subtree_height = (self.left._height
                                if self._has_left_child()
                                else -1)
 
@@ -95,7 +95,7 @@ class _AVLNode():
             tallest_child = self.right
         else:
             tallest_child = (self.right
-                             if self.right.height > self.left.height
+                             if self.right._height > self.left._height
                              else self.left)
 
         if self._is_left_heavy():
@@ -115,9 +115,9 @@ class _AVLNode():
         self.right = pivot.left
         pivot.left = self
 
-        self.height = self._recalculate_height()
+        self._height = self._recalculate_height()
         pivot.height = pivot._recalculate_height()
-        self.balance_factor = self._calculate_balance_factor()
+        self._balance_factor = self._calculate_balance_factor()
         pivot.balance_factor = pivot._calculate_balance_factor()
 
         return pivot
@@ -126,16 +126,16 @@ class _AVLNode():
         self.left = pivot.right
         pivot.right = self
 
-        self.height = self._recalculate_height()
+        self._height = self._recalculate_height()
         pivot.height = pivot._recalculate_height()
-        self.balance_factor = self._calculate_balance_factor()
+        self._balance_factor = self._calculate_balance_factor()
         pivot.balance_factor = pivot._calculate_balance_factor()
 
         return pivot
 
     def _recalculate_height(self):
-        return max(self.left.height if self._has_left_child() else -1,
-                   self.right.height if self._has_right_child() else -1) + 1
+        return max(self.left._height if self._has_left_child() else -1,
+                   self.right._height if self._has_right_child() else -1) + 1
 
     def _has_two_children(self):
         return self._has_left_child() and self._has_right_child()
@@ -147,7 +147,7 @@ class _AVLNode():
         return self.right is not None
 
     def _is_right_heavy(self):
-        return self.balance_factor > 0
+        return self._balance_factor > 0
 
     def _is_left_heavy(self):
-        return self.balance_factor < 0
+        return self._balance_factor < 0
