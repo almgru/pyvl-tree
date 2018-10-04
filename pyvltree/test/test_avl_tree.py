@@ -104,6 +104,22 @@ class TestAVLTree(unittest.TestCase):
         self.assertEqual(self.tree._root.left.value, 1)
         self.assertEqual(self.tree._root.right.value, 3)
 
+    def test_insert__balance_tree__balance_pivot_has_two_children(self):
+        self.tree.insert(5)
+        self.tree.insert(4)
+        self.tree.insert(7)
+        self.tree.insert(6)
+        self.tree.insert(8)
+
+        self.tree.insert(9)
+
+        self.assertEqual(self.tree._root.value, 7)
+        self.assertEqual(self.tree._root.left.value, 5)
+        self.assertEqual(self.tree._root.right.value, 8)
+        self.assertEqual(self.tree._root.left.left.value, 4)
+        self.assertEqual(self.tree._root.left.right.value, 6)
+        self.assertEqual(self.tree._root.right.right.value, 9)
+
     def test_delete__set_root_to_none__deleting_leaf_root(self):
         self.tree._root = Helper.create_node(1)
         self.tree.delete(1)

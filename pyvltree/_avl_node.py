@@ -154,9 +154,6 @@ class _AVLNode():
     def _has_right_child(self):
         return self.right is not None
 
-    def _is_balanced(self):
-        return self.balance_factor == 0
-
     def _is_right_heavy(self):
         return self.balance_factor > 0
 
