@@ -16,16 +16,6 @@ class _AVLNode():
         else:
             return self.right.search(key) if self._has_right_child() else None
 
-    def height(self):
-        if self._has_two_children():
-            return 1 + max(self.left.height(), self.right.height())
-        elif self._has_right_child():
-            return 1 + self.right.height()
-        elif self._has_left_child():
-            return 1 + self.left.height()
-        else:
-            return 0
-
     def size(self):
         if self._has_two_children():
             return 1 + self.left.size() + self.right.size()
@@ -45,14 +35,18 @@ class _AVLNode():
                 new_height = max(self._height, 1)
             else:
                 self.left = self.left.insert(value)
-                new_height = max(self._height, self.left._height + 1)
+                new_height = (max(self._height, self.left._height + 1)
+                              if self._has_left_child()
+                              else self._height)
         else:
             if self.right is None:
                 self.right = _AVLNode(value)
                 new_height = max(self._height, 1)
             else:
                 self.right = self.right.insert(value)
-                new_height = max(self._height, self.right._height + 1)
+                new_height = (max(self._height, self.right._height + 1)
+                              if self._has_right_child()
+                              else self._height)
 
         self._height = new_height
         self._balance_factor = self._calculate_balance_factor()
@@ -77,7 +71,7 @@ class _AVLNode():
                           else None)
         elif self._has_two_children():
             self.value = self.right._min().value
-            self.right.delete(self.value)
+            self.right = self.right.delete(self.value)
         else:
             new_subtree_root = (self.left
                                 if self.left is not None
@@ -117,17 +111,17 @@ class _AVLNode():
                              if self.right._height > self.left._height
                              else self.left)
 
-        if self._is_left_heavy():
-            if tallest_child._is_left_heavy():  # Left-Left
-                return self._rotate_right(tallest_child)
-            elif tallest_child._is_right_heavy():  # Left-Right
+        if tallest_child is self.left:
+            if tallest_child._is_right_heavy():     # Left-Right
                 return (self._rotate_right(
                         tallest_child._rotate_left(tallest_child.right)))
-        elif self._is_right_heavy():
-            if tallest_child._is_left_heavy():  # Right-Left
+            else:                                   # Left-Left
+                return self._rotate_right(tallest_child)
+        elif tallest_child is self.right:
+            if tallest_child._is_left_heavy():      # Right-Left
                 return (self._rotate_left(
                         tallest_child._rotate_right(tallest_child.left)))
-            elif tallest_child._is_right_heavy():  # Right-Right
+            else:                                   # Right-Right
                 return self._rotate_left(tallest_child)
 
     def _rotate_left(self, pivot):
@@ -135,7 +129,7 @@ class _AVLNode():
         pivot.left = self
 
         self._height = self._recalculate_height()
-        pivot.height = pivot._recalculate_height()
+        pivot._height = pivot._recalculate_height()
         self._balance_factor = self._calculate_balance_factor()
         pivot.balance_factor = pivot._calculate_balance_factor()
 
@@ -146,7 +140,7 @@ class _AVLNode():
         pivot.right = self
 
         self._height = self._recalculate_height()
-        pivot.height = pivot._recalculate_height()
+        pivot._height = pivot._recalculate_height()
         self._balance_factor = self._calculate_balance_factor()
         pivot.balance_factor = pivot._calculate_balance_factor()
 
