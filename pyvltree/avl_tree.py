@@ -60,3 +60,13 @@ class AVLTree():
         self._root = (self._root.delete(value)
                       if self._root is not None
                       else None)
+
+    def height(self):
+        """ Calculates the height of the root node.
+
+            Time complexity: O(n)
+
+            Returns the current height of the root node.
+        """
+
+        return self._root.height() if self._root is not None else -1

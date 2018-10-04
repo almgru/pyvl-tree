@@ -16,6 +16,16 @@ class _AVLNode():
         else:
             return self.right.search(key) if self._has_right_child() else None
 
+    def height(self):
+        if self._has_two_children():
+            return 1 + max(self.left.height(), self.right.height())
+        elif self._has_right_child():
+            return 1 + self.right.height()
+        elif self._has_left_child():
+            return 1 + self.left.height()
+        else:
+            return 0
+
     def size(self):
         if self._has_two_children():
             return 1 + self.left.size() + self.right.size()

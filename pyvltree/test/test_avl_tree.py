@@ -299,3 +299,32 @@ class TestAVLTree(unittest.TestCase):
         actual = self.tree.size()
 
         self.assertEqual(actual, expected)
+
+    def test_height__return_negative_one__tree_is_empty(self):
+        expected = -1
+
+        actual = self.tree.height()
+
+        self.assertEqual(actual, expected)
+
+    def test_height__return_zero__tree_has_one_element(self):
+        expected = 0
+        self.tree.insert(1)
+
+        actual = self.tree.height()
+
+        self.assertEqual(actual, expected)
+
+    def test_height__return_correct_height__nodes_with_different_height(self):
+        expected = 3
+        self.tree.insert(5)
+        self.tree.insert(2)
+        self.tree.insert(7)
+        self.tree.insert(6)
+        self.tree.insert(1)
+        self.tree.insert(3)
+        self.tree.insert(4)
+
+        actual = self.tree.height()
+
+        self.assertEqual(actual, expected)
