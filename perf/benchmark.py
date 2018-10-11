@@ -21,15 +21,9 @@ n = args.n
 
 tree = AVLTree()
 gc.disable()
-sample = random.sample(range(-n, n), n)
 
-for i, val in enumerate(sample):
-    if n // 10 != 0 and i % (n // 10) == 0:
-        sys.stdout.write(".")
-        sys.stdout.flush()
+for val in random.sample(range(-n, n), n):
     tree.insert(val)
-
-print()
 
 if args.iterations:
     search_total = 0
@@ -57,6 +51,6 @@ if args.iterations:
 
         tree.insert(to_delete)
 
-print("{0}\t{1}\t{2}\t{3}\n".format(n, search_total / args.iterations,
-                                    insert_total / args.iterations,
-                                    delete_total / args.iterations))
+print("{0}\t{1}\t{2}\t{3}".format(n, (search_total / args.iterations) * 1e6,
+                                  (insert_total / args.iterations) * 1e6,
+                                  (delete_total / args.iterations) * 1e6))
