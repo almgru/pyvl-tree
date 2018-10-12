@@ -1,56 +1,79 @@
 #!/usr/bin/env python3
 
+from datetime import datetime
 import time
 import random
-import argparse
-import gc
 import sys
-from datetime import datetime
+import gc
+import argparse
+import numpy
 
 from pyvltree.avl_tree import AVLTree
 
-random.seed(datetime.now())
 
-parser = argparse.ArgumentParser()
-parser.add_argument('n', help='Number of operations to perform.', type=int)
-parser.add_argument('-i', '--iterations',
-                    help='Iterations to perform when n reached.', type=int)
-args = parser.parse_args()
+def main(argv):
+    gc.disable()
+    random.seed(datetime.now())
 
-n = args.n
+    args = init_argparse().parse_args()
 
-tree = AVLTree()
-gc.disable()
+    tree = populate_tree(-args.n, args.n, args.n)
 
-for val in random.sample(range(-n, n), n):
-    tree.insert(val)
+    search_times = []
+    insert_times = []
+    delete_times = []
 
-if args.iterations:
-    search_total = 0
-    insert_total = 0
-    delete_total = 0
+    iterate(tree, args, search_times, insert_times, delete_times)
 
-    for i in range(args.iterations):
-        to_search = random.randrange(-n, n)
-        to_insert = random.randrange(-n, n)
-        to_delete = random.randrange(-n, n)
+    mean_search = numpy.mean(search_times)
+    mean_insert = numpy.mean(insert_times)
+    mean_delete = numpy.mean(delete_times)
 
+    print("{0}\t{1}\t{2}\t{3}".format(args.n, mean_search * 1e6,
+                                      mean_insert * 1e6, mean_delete * 1e6))
+
+
+def populate_tree(min_, max_, n):
+    tree = AVLTree()
+    sample = random.sample(range(min_, max_), n)
+
+    for val in sample:
+        tree.insert(val)
+
+    return tree
+
+
+def iterate(tree, args, search_arr, ins_arr, del_arr):
+    def _time_call(fun, *args):
         start = time.perf_counter()
-        tree.search(to_search)
-        search_total += time.perf_counter() - start
+        fun(*args)
+        return time.perf_counter() - start
 
-        start = time.perf_counter()
-        tree.insert(to_insert)
-        insert_total += time.perf_counter() - start
+    for i in range(args.i):
+        to_search = random.randrange(-args.n, args.n)
+        to_insert = random.randrange(-args.n, args.n)
+        to_delete = random.randrange(-args.n, args.n)
 
-        tree.delete(to_insert)
+        search_arr.append(_time_call(tree.search, to_search))
 
-        start = time.perf_counter()
-        tree.delete(to_delete)
-        delete_total += time.perf_counter() - start
+        exists = tree.search(to_insert) == to_insert
+        ins_arr.append(_time_call(tree.insert, to_insert))
+        if not exists:
+            tree.delete(to_insert)
 
-        tree.insert(to_delete)
+        exists = tree.search(to_delete) == to_delete
+        del_arr.append(_time_call(tree.delete, to_delete))
+        if exists:
+            tree.insert(to_delete)
 
-print("{0}\t{1}\t{2}\t{3}".format(n, (search_total / args.iterations) * 1e6,
-                                  (insert_total / args.iterations) * 1e6,
-                                  (delete_total / args.iterations) * 1e6))
+
+def init_argparse():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('n', help='Number of operations to perform.', type=int)
+    parser.add_argument('i', help='Iterations to perform when n reached.',
+                        type=int)
+    return parser
+
+
+if __name__ == '__main__':
+    main(sys.argv)
