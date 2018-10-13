@@ -1,9 +1,9 @@
 # pyvl-tree
 
-__pyvl-tree__ is an a self-balancing binary search tree (BST) implemented using the Adelson-Velsky & Landis (AVL) algorithms.
+_pyvl-tree_ is an a self-balancing binary search tree (BST) implemented using the Adelson-Velsky & Landis, _AVL_, algorithms.
 
-A self-balancing BST has the valuable property that its height is _at most_ __log<sub>2</sub>(n)__, 
-where __n__ is the number of elements in the tree. This means that _search_, _insertion_ and _deletion_ 
+A self-balancing BST has the valuable property that its height is at most _log<sub>2</sub>(n)_, 
+where _n_ is the number of elements in the tree. This means that __search__, __insertion__ and __deletion__ 
 has more reliable performance than an ordinary BST as the number of elements in the tree increases.
 
 ## Install
@@ -55,6 +55,8 @@ Average time complexity: O(log n)
 Worst-case time complexity: O(log n)
 
 ## Performance
+### Linear scale
 ![Plot linear](./perf/plot-linear.png)
 
+### Logarithmic scale
 ![Plot logarithmic](./perf/plot-log.png)
