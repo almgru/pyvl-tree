@@ -14,6 +14,6 @@ setup(
     url='https://github.com/almgru/Algorithms',
     license='LICENSE.txt',
     description='Simple AVL tree implementation.',
-    long_description=open('README.txt').read(),
+    long_description=open('README.rst', 'rt').read(),
     install_requires=[]
 )
