@@ -10,6 +10,8 @@ pycodestyle = "*"
 coverage = "*"
 jedi = "*"
 matplotlib = "*"
+numpy = "*"
+pandas = "*"
 
 [requires]
 python_version = "3.6"
