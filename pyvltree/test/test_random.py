@@ -36,3 +36,19 @@ class TestRandom(unittest.TestCase):
 
         for val in expected:
             self.assertEqual(self.tree.search(val), val)
+
+    def test_size__correct__random_insertions_and_deletions(self):
+        insertions = 1024
+        deletions = 512
+        to_insert = set(random.sample(range(-10_000, 10_000), insertions))
+        to_delete = set(random.sample(to_insert, deletions))
+        expected = insertions - deletions
+
+        for val in to_insert:
+            self.tree.insert(val)
+
+        for val in to_delete:
+            self.tree.delete(val)
+
+        actual = self.tree.size()
+        self.assertEqual(actual, expected)

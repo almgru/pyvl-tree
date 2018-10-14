@@ -12,10 +12,9 @@ class AVLTree():
     def search(self, key):
         """ Search for an element given an equivalent key.
 
-            Equivalence is determined from the element's __eq__ method.
+            Equivalence is determined based on the elements __eq__ method.
 
-            Average time complexity: O(log n)
-            Worst-case time complexity: O(n)
+            Time complexity: O(log n)
 
             Returns the element equivalent to the key if found, None otherwise.
         """
@@ -25,22 +24,19 @@ class AVLTree():
         return node.value if node is not None else None
 
     def size(self):
-        """ Calculates the number of elements in the tree.
+        """ Returns the number of elements in the tree.
 
-            Time complexity: O(n)
-
-            Returns the number of elements in the tree.
+            Time complexity: O(1)
         """
 
-        return self._root.size() if self._root is not None else 0
+        return self._root.size if self._root is not None else 0
 
     def insert(self, value):
         """ Insert an element into the tree.
 
             Duplicate elements will be silently discarded.
 
-            Average time complexity: O(log n)
-            Worst-case time complexity: O(n)
+            Time complexity: O(log n)
         """
 
         self._root = (_AVLNode(value)
@@ -50,11 +46,7 @@ class AVLTree():
     def delete(self, value):
         """ Deletes an element from the tree.
 
-            If the element deleted had two children, it will be replaced by
-            its in-order successor.
-
-            Average time complexity: O(log n)
-            Worst-case time complexity: O(n)
+            Time complexity: O(log n)
         """
 
         self._root = (self._root.delete(value)

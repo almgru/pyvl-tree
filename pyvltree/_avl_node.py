@@ -4,6 +4,7 @@ class _AVLNode():
         self.value = value
         self.left = None
         self.right = None
+        self.size = 1
         self._height = 0
         self._balance_factor = 0
         self._BALANCE_THRESHOLD = 1
@@ -15,16 +16,6 @@ class _AVLNode():
             return self.left.search(key) if self._has_left_child() else None
         else:
             return self.right.search(key) if self._has_right_child() else None
-
-    def size(self):
-        if self._has_two_children():
-            return 1 + self.left.size() + self.right.size()
-        elif self._has_left_child():
-            return 1 + self.left.size()
-        elif self._has_right_child():
-            return 1 + self.right.size()
-        else:
-            return 1
 
     def insert(self, value):
         if value == self.value:
@@ -56,6 +47,8 @@ class _AVLNode():
         else:
             new_subtree_root = self
 
+        self.size = self._recalculate_size()
+
         return new_subtree_root
 
     def delete(self, value):
@@ -82,6 +75,8 @@ class _AVLNode():
 
         if self._needs_rebalancing():
             new_subtree_root = self._rebalance()
+
+        self.size = self._recalculate_size()
 
         return new_subtree_root
 
@@ -132,6 +127,8 @@ class _AVLNode():
         pivot._height = pivot._recalculate_height()
         self._balance_factor = self._calculate_balance_factor()
         pivot.balance_factor = pivot._calculate_balance_factor()
+        self.size = self._recalculate_size()
+        pivot.size = pivot._recalculate_size()
 
         return pivot
 
@@ -143,12 +140,24 @@ class _AVLNode():
         pivot._height = pivot._recalculate_height()
         self._balance_factor = self._calculate_balance_factor()
         pivot.balance_factor = pivot._calculate_balance_factor()
+        self.size = self._recalculate_size()
+        pivot.size = pivot._recalculate_size()
 
         return pivot
 
     def _recalculate_height(self):
         return max(self.left._height if self._has_left_child() else -1,
                    self.right._height if self._has_right_child() else -1) + 1
+
+    def _recalculate_size(self):
+        size = 1
+
+        if self._has_left_child():
+            size += self.left.size
+        if self._has_right_child():
+            size += self.right.size
+
+        return size
 
     def _has_two_children(self):
         return self._has_left_child() and self._has_right_child()

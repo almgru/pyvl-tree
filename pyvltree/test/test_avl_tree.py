@@ -300,9 +300,9 @@ class TestAVLTree(unittest.TestCase):
 
     def test_size__expected__tree_has_node_with_two_children(self):
         expected = 3
-        self.tree._root = Helper.create_node(4)
-        self.tree._root.left = Helper.create_node(2)
-        self.tree._root.right = Helper.create_node(6)
+        self.tree.insert(4)
+        self.tree.insert(2)
+        self.tree.insert(6)
 
         actual = self.tree.size()
 
@@ -310,9 +310,9 @@ class TestAVLTree(unittest.TestCase):
 
     def test_size__expected__tree_has_nodes_with_one_child(self):
         expected = 3
-        self.tree._root = Helper.create_node(10)
-        self.tree._root.left = Helper.create_node(5)
-        self.tree._root.left.right = Helper.create_node(7)
+        self.tree.insert(10)
+        self.tree.insert(5)
+        self.tree.insert(7)
 
         actual = self.tree.size()
 
