@@ -2,7 +2,7 @@ from setuptools import setup
 
 
 setup(
-    name='PYVLTree',
+    name='pyvltree',
     version='0.3.2',
     author='Daniel Alm Grundström',
     author_email='daniel.alm.grundstrom@protonmail.com',
@@ -11,7 +11,7 @@ setup(
     ],
     test_suite='pyvltree.test',
     scripts=[],
-    url='https://github.com/almgru/Algorithms',
+    url='https://github.com/almgru/pyvl-tree',
     license='LICENSE.txt',
     description='Simple AVL tree implementation.',
     long_description=open('README.rst', 'rt').read(),

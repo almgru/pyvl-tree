@@ -1,7 +1,7 @@
 sources := $(wildcard pyvltree/*.py)
 version := $(shell grep --perl-regex --only-matching \
 			 "(?<=version=\')\d+\.\d+\.\d+(\-.+)?(?=\')" ./setup.py)
-target := dist/PYVLTree-$(version).tar.gz
+target := dist/pyvltree-$(version).tar.gz
 
 .PHONY: all
 all: $(target)

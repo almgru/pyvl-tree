@@ -12,5 +12,6 @@ Usage::
     
     tree = AVLTree()
     tree.insert(3)
-    three = tree.find(3)
+    three = tree.search(3)
+    n = tree.size()
     tree.delete(3)

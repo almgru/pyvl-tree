@@ -4,4 +4,4 @@ MANIFEST
 __pycache__/
 dist/
 .coverage
-PYVLTree.egg-info/
+pyvltree.egg-info/
