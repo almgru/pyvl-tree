@@ -13,7 +13,7 @@ has more reliable performance than an ordinary BST as the number of elements in 
 Install with,
 
 ```
-pip install pyvl-tree
+pip install pyvltree
 ```
 
 ## API
