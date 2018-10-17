@@ -13,12 +13,16 @@ clean:
 	rm -rf ./dist/
 	rm -rf ./PYVLTree.egg-info/
 
+.PHONY: publish
+publish: $(target)
+	pipenv run twine publish ./dist/pyvltree-$(version).tar.gz ./dist/pyvltree-$(version)-py3-none-any.whl
+
 .PHONY: test
 test: $(target)
-	pipenv run coverage run -m unittest
+	pipenv run python setup.py test
 	pipenv run coverage report -m
 
 $(target): $(sources)
-	pipenv update --outdated
+	pipenv update --dev
 	pipenv run python setup.py sdist bdist_wheel
 	pipenv run pip install $(target)
