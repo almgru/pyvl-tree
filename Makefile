@@ -20,5 +20,5 @@ test: $(target)
 
 $(target): $(sources)
 	pipenv update --outdated
-	pipenv run python setup.py sdist
+	pipenv run python setup.py sdist bdist_wheel
 	pipenv run pip install $(target)
