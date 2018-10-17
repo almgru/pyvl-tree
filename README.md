@@ -1,3 +1,6 @@
+| Note: pyvl-tree is an educational project with the goal of being an easy-to-read reference for someone wanting to understand or implement an AVL tree. If you're looking for something to use in production, you should consider using something faster and more robust like [sortedcontainers](https://github.com/grantjenks/python-sortedcontainers). |
+| --- |
+
 # pyvl-tree
 
 _pyvl-tree_ is an a self-balancing binary search tree (BST) implemented using the Adelson-Velsky & Landis, _AVL_, algorithms.
