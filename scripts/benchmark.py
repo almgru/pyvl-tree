@@ -49,7 +49,7 @@ def iterate(tree, args, search_arr, ins_arr, del_arr):
         fun(*args)
         return time.perf_counter() - start
 
-    for i in range(args.i):
+    for i in range(args.iterations):
         to_search = random.randrange(-args.n, args.n)
         to_insert = random.randrange(-args.n, args.n)
         to_delete = random.randrange(-args.n, args.n)
@@ -70,8 +70,8 @@ def iterate(tree, args, search_arr, ins_arr, del_arr):
 def init_argparse():
     parser = argparse.ArgumentParser()
     parser.add_argument('n', help='Number of operations to perform.', type=int)
-    parser.add_argument('i', help='Iterations to perform when n reached.',
-                        type=int)
+    parser.add_argument('-i', '--iterations', 
+                        help='Iterations to perform when n reached.', type=int)
     return parser
 
 

@@ -15,14 +15,38 @@ clean:
 
 .PHONY: publish
 publish: $(target)
-	pipenv run twine publish ./dist/pyvltree-$(version).tar.gz ./dist/pyvltree-$(version)-py3-none-any.whl
+	#twine publish ./dist/pyvltree-$(version).tar.gz ./dist/pyvltree-$(version)-py3-none-any.whl
+
+.PHONY: plot
+plot: metrics
+	. ./venv/bin/activate ;\
+			./scripts/plot.py ./run-times/latest.txt -o ./plots/ ;\
+			mv ./plots/plot-linear.png ./plots/lin-$$(date +'%F_%T').png ;\
+			mv ./plots/plot-log.png ./plots/log-$$(date +'%F_%T').png ;\
+			mv ./run-times/latest.txt ./run-times/$$(\date +'%F_%T').txt
+
+.PHONY: metrics
+metrics:
+	@echo "Generating runtime metrics. This may take a while.."
+	. ./venv/bin/activate ;\
+			./scripts/gather-run-time-metrics.sh --iterations 1000 \
+												 --n-pow-start 0 \
+												 --n-pow-end 16 \
+			> ./run-times/latest.txt
 
 .PHONY: test
 test: $(target)
-	pipenv run python setup.py test
-	pipenv run coverage report -m
+	. ./venv/bin/activate ;\
+			python setup.py test ;\
+			coverage report -m
 
-$(target): $(sources)
-	pipenv update --dev
-	pipenv run python setup.py sdist bdist_wheel
-	pipenv run pip install $(target)
+$(target): venv $(sources)
+	. ./venv/bin/activate ;\
+			python setup.py sdist bdist_wheel ;\
+			pip install $(target)
+
+venv:
+	python3 -m venv venv
+	. ./venv/bin/activate ;\
+			pip install --upgrade pip setuptools wheel ;\
+			pip install --requirement ./requirements-dev.txt
