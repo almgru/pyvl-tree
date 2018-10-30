@@ -1,4 +1,4 @@
-| Note: pyvl-tree is an educational project with the goal of being an easy-to-read reference for someone wanting to understand or implement an AVL tree. If you're looking for something to use in production, you should consider using something faster and more robust like [sortedcontainers](https://github.com/grantjenks/python-sortedcontainers). |
+| Note: pyvl-tree is an educational project. If you're looking for something to use in production, you should consider using something faster and more robust like [sortedcontainers](https://github.com/grantjenks/python-sortedcontainers). |
 | --- |
 
 # pyvl-tree
@@ -22,12 +22,12 @@ pip install pyvltree
 A recursive implementation of a self-balancing binary search tree. Self-balancing is achieved using the AVL algorithms.
 
 #### `AVLTree()`
-Constructor. Creates a AVLTree object and returns it.
+Constructor.
 
 #### `search(key)`
 Search for an element given an equivalent key.
 
-Equivalence is determined based on the elements __eq__ method.
+Equivalence is determined based on the elements `__eq__` method.
 
 Time complexity: O(log n)
 
@@ -52,7 +52,7 @@ Time complexity: O(log n)
 
 ## Performance
 ### Linear scale
-![Plot linear](./perf/plot-linear.png)
+![Plot linear](./plots/lin-2018-10-12_00:25:54.png)
 
 ### Logarithmic scale
-![Plot logarithmic](./perf/plot-log.png)
+![Plot logarithmic](./plots/log-2018-10-12_00:25:54.png)
