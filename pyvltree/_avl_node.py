@@ -1,5 +1,5 @@
 class _AVLNode():
-    cls._BALANCE_FACTOR_LIMIT = 2;
+    _BALANCE_FACTOR_LIMIT = 2;
 
     def __init__(self, value):
         self.value = value
@@ -84,7 +84,7 @@ class _AVLNode():
         return self.left._min() if self._has_left_child() else self
 
     def _needs_rebalancing(self):
-        return abs(self._balance_factor) >= cls._BALANCE_FACTOR_LIMIT
+        return abs(self._balance_factor) >= _AVLNode._BALANCE_FACTOR_LIMIT
 
     def _calculate_balance_factor(self):
         right_subtree_height = (self.right._height
